@@ -443,6 +443,7 @@ def research():
       mainscreen()
     localdb["Research"]["Payload Rank"] += 1
     localdb["Funding"] -= 50
+    save(localdb)
     mainscreen()
 
 def mainscreen():
