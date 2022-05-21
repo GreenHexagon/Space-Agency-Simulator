@@ -97,6 +97,7 @@ def awardAccolade(award):
     print(f"You have achieved {award}")
 
 
+resetdb()
 localdb = load()
 save(localdb)
 
@@ -222,7 +223,7 @@ def new_mission():
     w = 1
     for i in x:
       
-      type(f"{w}: {i['Name']}")
+      rgbcolortype(f"{w}: {i['Name']}",255,165,0)
       w += 1
     ww = input(">: ")
     w = int(ww)
@@ -238,7 +239,7 @@ def new_mission():
   else:
     z = 1
     for i in y:
-      type(f"{z}: {i['Name']}")
+      rgbcolortype(f"{z}: {i['Name']}",255,165,0)
       z += 1
     zz = input(">: ")
     z = int(zz)
@@ -281,7 +282,7 @@ def st_mission():
   else:
     z = 1
     for i in m:
-      type(f"{z}: {i['Name']}")
+      rgbcolortype(f"{z}: {i['Name']}",255,165,0)
       z += 1
     zz = input(">: ")
     z = int(zz)
@@ -355,11 +356,11 @@ def view_mission():
     mainscreen()
   type("Which orbit?")
   if a["Low Earth Orbit"] == True:
-    type("1: Low Earth Orbit") 
+    rgbcolortype("1: Low Earth Orbit",255,165,0) 
   if a["Med Earth Orbit"] == True:
-    type("2: Med Earth Orbit")
+    rgbcolortype("2: Med Earth Orbit",255,165,0)
   if a["High Earth Orbit"] == True:
-    type("3: High Earth Orbit")
+   rgbcolortype("3: High Earth Orbit",255,165,0)
   oz = int(input(">: "))
   if oz == 1:
     z = "LEO"
@@ -371,7 +372,7 @@ def view_mission():
   type("Which mission?")
   for i in x:
     if i["State"] == z:
-      type(f"{xz}: {i['Name']}")
+      rgbcolortype(f"{xz}: {i['Name']}",255,165,0)
     else:
       pass
     xz += 1
@@ -385,7 +386,7 @@ def view_mission():
     pass
   type(f"Name: {sm['Name']}")
   type(f"Rocket: {sm['Rocket']['Launch Vehicle']['Name']} \nPayload: {sm['Rocket']['Payload']['Name']} {sm['Rocket']['Payload']['Type']}")
-  type(f"Orbit: {sm['State']}")
+  type(f"State: {sm['State']}")
   type("Press any key to return to the main screen")
   input("")
   save(localdb)
@@ -402,11 +403,11 @@ def view_pmissions():
     mainscreen()
   type("Succesful Missions")
   for i in s:
-    type(f"{i['Name']}: {i['State']}")
+    rgbcolortype(f"{i['Name']}: {i['State']}",0,255,0)
   sleep(1)
   type("Failed Missions")
   for i in f:
-    type(f"{i['Name']}: {i['State']}")
+    rgbcolortype(f"{i['Name']}: {i['State']}", 255,0,0)
   sleep(1)
   type("Press any key to return to the main screen")
   input("")
