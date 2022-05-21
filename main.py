@@ -308,6 +308,8 @@ def st_mission():
     localdb["Missions"].remove(mm)
     localdb["Failed Missions"].append(mm)
     mm["State"] = "Failed"
+    sleep(1)
+    mainscreen()
   elif xx > 100 < 190 and mm["Goal"] == 2:
     mm["State"] = "MEO"
     type(f"Mission Success, you have launched a payload into {mm['State']}")
@@ -322,6 +324,7 @@ def st_mission():
     localdb["Missions"].remove(mm)
     localdb["Failed Missions"].append(mm)
     mm["State"] = "Failed"
+    sleep(1)
     mainscreen()
   elif xx > 200 < 290 and mm["Goal"] == 3:
     mm["State"] = "HEO"
@@ -337,6 +340,7 @@ def st_mission():
     localdb["Missions"].remove(mm)
     localdb["Failed Missions"].append(mm)
     mm["State"] = "Failed"
+    sleep(1)
     mainscreen()
   else:
     type("Your mission failed to launch")
@@ -344,6 +348,7 @@ def st_mission():
     localdb["Missions"].remove(mm)
     localdb["Failed Missions"].append(mm)
     mm["State"] = "Failed"
+    sleep(1)
     mainscreen()
   mainscreen()
 
