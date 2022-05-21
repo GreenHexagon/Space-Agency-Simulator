@@ -516,22 +516,29 @@ def mainscreen():
     save(localdb)
   if mainscreen_input == 5:
     view_mission()
+    save(localdb)
   if mainscreen_input == 6:
     view_pmissions()
+    save(localdb)
   if mainscreen_input == 7:
     view_lv()
+    save(localdb)
   if mainscreen_input == 8:
     view_pl()
+    save(localdb)
   if mainscreen_input == 9:
     research()
+    save(localdb)
   if mainscreen_input == 0:
     save(localdb)
     clr()
     type('saved', 0.025)
     sleep(2)
+    save(localdb)
     mainscreen()
   if mainscreen_input > 9:
     type("Not an accepted value", 0)
+    save(localdb)
     sleep(3)
     mainscreen()
 
