@@ -291,7 +291,7 @@ def st_mission():
   mlv = mm["Rocket"]
   print(mm["Goal"])
   mmr = mlv["Launch Vehicle"]
-  xx = random.randrange(mmr["Payload Capability"] * 100,mmr["Payload Capability"] * 150)
+  xx = random.randrange(mmr["Payload Capability"] * 90,mmr["Payload Capability"] * 110)
   print(xx)
   if xx < 90 and mm["Goal"] == 1: 
     mm["State"] = "LEO"
