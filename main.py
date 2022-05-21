@@ -322,7 +322,7 @@ def st_mission():
     localdb["Failed Missions"].append(mm)
     mm["State"] = "Failed"
     mainscreen()
-  elif xx > 200 < 290 and mm["Goal"] == 2:
+  elif xx > 200 < 290 and mm["Goal"] == 3:
     mm["State"] = "HEO"
     type(f"Mission Success, you have launched a payload into {mm['State']}")
     localdb["Funding"] += 50
