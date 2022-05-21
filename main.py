@@ -291,7 +291,7 @@ def st_mission():
   mlv = mm["Rocket"]
   print(mm["Goal"])
   mmr = mlv["Launch Vehicle"]
-  xx = random.randrange(mmr["Payload Capability"] * 100)
+  xx = random.randrange(mmr["Payload Capability"] * 100,mmr["Payload Capability"] * 200)
   print(xx)
   if xx < 90 and mm["Goal"] == 1: 
     mm["State"] = "LEO"
@@ -326,7 +326,7 @@ def st_mission():
     mm["State"] = "Failed"
     sleep(1)
     mainscreen()
-  elif xx > 200 < 290 and mm["Goal"] == 3:
+  elif xx > 200 and xx < 290 and mm["Goal"] == 3:
     mm["State"] = "HEO"
     type(f"Mission Success, you have launched a payload into {mm['State']}")
     localdb["Funding"] += 50
