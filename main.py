@@ -349,6 +349,12 @@ def st_mission():
     
     sleep(1)
     mainscreen()
+  else:
+    type("Your mission failed to launch")
+    sleep(1)
+    mm["State"] = "Failed"
+    localdb["Missions"].remove(mm)
+    localdb["Failed Missions"].append(mm)
   mainscreen()
 
 def view_mission():
