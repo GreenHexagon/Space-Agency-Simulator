@@ -491,6 +491,7 @@ def mainscreen():
 First Stage Experience:\033[38;2;0;255;0m Rank {localdb["Research"]["First Stage Rank"]}
 \033[38;2;255;165;0mSecond Stage Experience:\033[38;2;0;255;0m Rank {localdb["Research"]["Second Stage Rank"]}
 \033[38;2;255;165;0mBoosters Experience:\033[38;2;0;255;0m Rank {localdb["Research"]["Boosters Rank"]}\033[38;2;255;165;0m
+       
 1: New Mission
 2: Start Mission
 3: New Launch Vehicle
