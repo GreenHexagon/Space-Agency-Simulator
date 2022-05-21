@@ -289,6 +289,7 @@ def st_mission():
   type("Your mission is launching")
   sleep(2)
   mlv = mm["Rocket"]
+  print(mm["Goal"])
   mmr = mlv["Launch Vehicle"]
   xx = random.randrange(mmr["Payload Capability"] * 100)
   print(xx)
