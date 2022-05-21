@@ -279,8 +279,8 @@ def st_mission():
     sleep(1)
     mainscreen()
   else:
+    z = 1
     for i in m:
-      z = 1
       type(f"{z}: {i['Name']}")
       z += 1
     zz = input(">: ")
@@ -310,7 +310,7 @@ def st_mission():
     mm["State"] = "Failed"
     sleep(1)
     mainscreen()
-  elif xx > 100 < 190 and mm["Goal"] == 2:
+  elif xx > 100 and xx < 190 and mm["Goal"] == 2:
     mm["State"] = "MEO"
     type(f"Mission Success, you have launched a payload into {mm['State']}")
     localdb["Funding"] += 25
@@ -318,7 +318,7 @@ def st_mission():
     awardAccolade("Med Earth Orbit")
     localdb["Missions"].remove(mm)
     localdb["Successful Missions"].append(mm)
-  elif xx > 190 < 200:
+  elif xx > 190 and xx < 200:
     type("Your mission failed to launch")
     sleep(1)
     localdb["Missions"].remove(mm)
@@ -334,7 +334,7 @@ def st_mission():
     awardAccolade("High Earth Orbit")
     localdb["Missions"].remove(mm)
     localdb["Successful Missions"].append(mm)
-  elif xx > 290 < 300:
+  elif xx > 290 and xx < 300:
     type("Your mission failed to launch")
     sleep(1)
     localdb["Missions"].remove(mm)
