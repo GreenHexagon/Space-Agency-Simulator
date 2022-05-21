@@ -139,11 +139,16 @@ def new_pl():
   if r["Payload Rank"] >= 2:
     sleep(1)
     type("2: Medium Altitude Satellite")
+  if r["Payload Rank"] >= 3:
+    sleep(1)
+    type("3: High Altitude Satillite")
   pl_type = int(input(">: "))
   if pl_type == 1:
     pl["Type"] = "Satellite"
   if pl_type == 2:
     pl["Type"] = "Medium Altitude Satellite"
+  if pl_type == 3:
+    pl["Type"] = "High Altitude Satellite"
   pl["Orbital Capability"] = pl_type
   localdb["Payloads"].append(pl)
   mainscreen()
@@ -161,6 +166,8 @@ def new_lv():
     type("1: RocketDyne A-7")
   if r["First Stage Rank"] >= 2:
     type("2: RocketDyne H-1")
+  if r["First Stage Rank"] >= 3:
+    type("3: RocketDyne H-1 x8")
   lv_first_stage_rank = int(input(">: "))
   lv["First Stage Engine"] = lv_first_stage_rank
   sleep(1)
@@ -170,8 +177,10 @@ def new_lv():
     type("You have not researched second stages")
     lv_second_stage_rank = 0
     sleep(1)
-  if r["Second Stage Rank"] == 1:
+  if r["Second Stage Rank"] >= 1:
     type("1: RocketDyne RL10")
+  if r["Second Stage Rank"] >= 2:
+    type("2: RocketDyne J-2")
     lv_second_stage_rank = int(input(">: "))
   lv["Second Stage Engine"] = lv_second_stage_rank
   type("What boosters are you using?")
@@ -210,8 +219,9 @@ def new_mission():
     sleep(1)
     mainscreen()
   else:
+    w = 1
     for i in x:
-      w = 1
+      
       type(f"{w}: {i['Name']}")
       w += 1
     ww = input(">: ")
@@ -226,8 +236,8 @@ def new_mission():
     sleep(1)
     mainscreen()
   else:
+    z = 1
     for i in y:
-      z = 1
       type(f"{z}: {i['Name']}")
       z += 1
     zz = input(">: ")
@@ -244,6 +254,8 @@ def new_mission():
       type("1: LEO")
     if p["Orbital Capability"] >= 2:
       type("2: MEO")
+    if p["Orbital Capability"] >= 3:
+      type("3: HEO")
     g = int(input(">: "))
     m["Goal"] = g
 
@@ -267,8 +279,8 @@ def st_mission():
     sleep(1)
     mainscreen()
   else:
+    z = 1
     for i in m:
-      z = 1
       type(f"{z}: {i['Name']}")
       z += 1
     zz = input(">: ")
@@ -277,11 +289,14 @@ def st_mission():
   type("Your mission is launching")
   sleep(2)
   mlv = mm["Rocket"]
+  print(mm["Goal"])
   mmr = mlv["Launch Vehicle"]
-  xx = random.randrange(mmr["Payload Capability"] * 100)
+  xx = random.randrange(mmr["Payload Capability"] * 90,mmr["Payload Capability"] * 110)
+  print(xx)
   if xx < 90 and mm["Goal"] == 1: 
     mm["State"] = "LEO"
     type(f"Mission Success, you have launched a payload into {mm['State']}")
+    localdb["Funding"] += 10
     sleep(1)
     awardAccolade("Low Earth Orbit")
     sleep(1)
@@ -293,26 +308,39 @@ def st_mission():
     localdb["Missions"].remove(mm)
     localdb["Failed Missions"].append(mm)
     mm["State"] = "Failed"
-  elif xx > 100 < 190 and mm["Goal"] == 2:
+    sleep(1)
+    mainscreen()
+  elif xx > 100 and xx < 190 and mm["Goal"] == 2:
     mm["State"] = "MEO"
     type(f"Mission Success, you have launched a payload into {mm['State']}")
+    localdb["Funding"] += 25
     sleep(1)
     awardAccolade("Med Earth Orbit")
     localdb["Missions"].remove(mm)
     localdb["Successful Missions"].append(mm)
-  elif xx > 190 < 200:
+  elif xx > 190 and xx < 200:
     type("Your mission failed to launch")
     sleep(1)
     localdb["Missions"].remove(mm)
     localdb["Failed Missions"].append(mm)
     mm["State"] = "Failed"
+    sleep(1)
     mainscreen()
-  else:
+  elif xx > 200 and xx < 290 and mm["Goal"] == 3:
+    mm["State"] = "HEO"
+    type(f"Mission Success, you have launched a payload into {mm['State']}")
+    localdb["Funding"] += 50
+    sleep(1)
+    awardAccolade("High Earth Orbit")
+    localdb["Missions"].remove(mm)
+    localdb["Successful Missions"].append(mm)
+  elif xx > 290 and xx < 300:
     type("Your mission failed to launch")
     sleep(1)
     localdb["Missions"].remove(mm)
     localdb["Failed Missions"].append(mm)
     mm["State"] = "Failed"
+    sleep(1)
     mainscreen()
   mainscreen()
 
@@ -327,11 +355,18 @@ def view_mission():
     mainscreen()
   type("Which orbit?")
   if a["Low Earth Orbit"] == True:
-    type("1: Low Earth Orbit")
+    type("1: Low Earth Orbit") 
+  if a["Med Earth Orbit"] == True:
+    type("2: Med Earth Orbit")
+  if a["High Earth Orbit"] == True:
+    type("3: High Earth Orbit")
   oz = int(input(">: "))
-  
   if oz == 1:
     z = "LEO"
+  if oz == 2:
+    z = "MEO"
+  if oz == 3:
+    z = "HEO"
   xz = 1
   type("Which mission?")
   for i in x:
@@ -422,25 +457,26 @@ def research():
 
   xr = int(input(">: "))
   if xr == 1:
-    if localdb["Funding"] > 10:
+    if localdb["Funding"] < 10:
       type("You don't have enough money")
       mainscreen()
     localdb["Research"]["First Stage Rank"] += 1
     localdb["Funding"] -= 10
     mainscreen()
   if xr == 2:
-    if localdb["Funding"] > 25:
+    if localdb["Funding"] < 25:
       type("You don't have enough money")
       mainscreen()
     localdb["Research"]["Second Stage Rank"] += 1
     localdb["Funding"] -= 50
     mainscreen()
   if xr == 3:
-    if localdb["Funding"] > 50:
+    if localdb["Funding"] < 50:
       type("You don't have enough money")
       mainscreen()
     localdb["Research"]["Payload Rank"] += 1
     localdb["Funding"] -= 50
+    save(localdb)
     mainscreen()
 
 def mainscreen():
@@ -479,24 +515,32 @@ def mainscreen():
     save(localdb)
   if mainscreen_input == 5:
     view_mission()
+    save(localdb)
   if mainscreen_input == 6:
     view_pmissions()
+    save(localdb)
   if mainscreen_input == 7:
     view_lv()
+    save(localdb)
   if mainscreen_input == 8:
     view_pl()
+    save(localdb)
   if mainscreen_input == 9:
     research()
+    save(localdb)
   if mainscreen_input == 0:
     save(localdb)
     clr()
     type('saved', 0.025)
     sleep(2)
+    save(localdb)
     mainscreen()
   if mainscreen_input > 9:
     type("Not an accepted value", 0)
+    save(localdb)
     sleep(3)
     mainscreen()
+
 
 
 intro()
