@@ -424,21 +424,21 @@ def research():
 
   xr = int(input(">: "))
   if xr == 1:
-    if localdb["Funding"] > 10:
+    if localdb["Funding"] < 10:
       type("You don't have enough money")
       mainscreen()
     localdb["Research"]["First Stage Rank"] += 1
     localdb["Funding"] -= 10
     mainscreen()
   if xr == 2:
-    if localdb["Funding"] > 25:
+    if localdb["Funding"] < 25:
       type("You don't have enough money")
       mainscreen()
     localdb["Research"]["Second Stage Rank"] += 1
     localdb["Funding"] -= 50
     mainscreen()
   if xr == 3:
-    if localdb["Funding"] > 50:
+    if localdb["Funding"] < 50:
       type("You don't have enough money")
       mainscreen()
     localdb["Research"]["Payload Rank"] += 1
