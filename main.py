@@ -152,6 +152,8 @@ def new_pl():
     pl["Type"] = "High Altitude Satellite"
   pl["Orbital Capability"] = pl_type
   localdb["Payloads"].append(pl)
+
+  save(localdb)
   mainscreen()
   return pl
   
