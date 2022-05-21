@@ -139,11 +139,16 @@ def new_pl():
   if r["Payload Rank"] >= 2:
     sleep(1)
     type("2: Medium Altitude Satellite")
+  if r["Payload Rank"] >= 3:
+    sleep(1)
+    type("3: High Altitude Satillite")
   pl_type = int(input(">: "))
   if pl_type == 1:
     pl["Type"] = "Satellite"
   if pl_type == 2:
     pl["Type"] = "Medium Altitude Satellite"
+  if pl_type == 3:
+    pl["Type"] = "High Altitude Satellite"
   pl["Orbital Capability"] = pl_type
   localdb["Payloads"].append(pl)
   mainscreen()
@@ -161,6 +166,8 @@ def new_lv():
     type("1: RocketDyne A-7")
   if r["First Stage Rank"] >= 2:
     type("2: RocketDyne H-1")
+  if r["First Stage Rank"] >= 3:
+    type("3: RocketDyne H-1 x8")
   lv_first_stage_rank = int(input(">: "))
   lv["First Stage Engine"] = lv_first_stage_rank
   sleep(1)
@@ -170,8 +177,10 @@ def new_lv():
     type("You have not researched second stages")
     lv_second_stage_rank = 0
     sleep(1)
-  if r["Second Stage Rank"] == 1:
+  if r["Second Stage Rank"] >= 1:
     type("1: RocketDyne RL10")
+  if r["Second Stage Rank"] >= 2:
+    type("2: RocketDyne J-2")
     lv_second_stage_rank = int(input(">: "))
   lv["Second Stage Engine"] = lv_second_stage_rank
   type("What boosters are you using?")
@@ -245,6 +254,8 @@ def new_mission():
       type("1: LEO")
     if p["Orbital Capability"] >= 2:
       type("2: MEO")
+    if p["Orbital Capability"] >= 3:
+      type("3: HEO")
     g = int(input(">: "))
     m["Goal"] = g
 
@@ -310,6 +321,21 @@ def st_mission():
     localdb["Failed Missions"].append(mm)
     mm["State"] = "Failed"
     mainscreen()
+  elif xx > 200 < 290 and mm["Goal"] == 2:
+    mm["State"] = "HEO"
+    type(f"Mission Success, you have launched a payload into {mm['State']}")
+    localdb["Funding"] += 50
+    sleep(1)
+    awardAccolade("High Earth Orbit")
+    localdb["Missions"].remove(mm)
+    localdb["Successful Missions"].append(mm)
+  elif xx > 290 < 300:
+    type("Your mission failed to launch")
+    sleep(1)
+    localdb["Missions"].remove(mm)
+    localdb["Failed Missions"].append(mm)
+    mm["State"] = "Failed"
+    mainscreen()
   else:
     type("Your mission failed to launch")
     sleep(1)
@@ -333,11 +359,15 @@ def view_mission():
     type("1: Low Earth Orbit") 
   if a["Med Earth Orbit"] == True:
     type("2: Med Earth Orbit")
+  if a["High Earth Orbit"] == True:
+    type("3: High Earth Orbit")
   oz = int(input(">: "))
   if oz == 1:
     z = "LEO"
   if oz == 2:
     z = "MEO"
+  if oz == 3:
+    z = "HEO"
   xz = 1
   type("Which mission?")
   for i in x:
