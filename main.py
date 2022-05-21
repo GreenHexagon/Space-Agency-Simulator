@@ -210,8 +210,9 @@ def new_mission():
     sleep(1)
     mainscreen()
   else:
+    w = 1
     for i in x:
-      w = 1
+      
       type(f"{w}: {i['Name']}")
       w += 1
     ww = input(">: ")
@@ -226,8 +227,8 @@ def new_mission():
     sleep(1)
     mainscreen()
   else:
+    z = 1
     for i in y:
-      z = 1
       type(f"{z}: {i['Name']}")
       z += 1
     zz = input(">: ")
