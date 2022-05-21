@@ -97,7 +97,7 @@ def awardAccolade(award):
     print(f"You have achieved {award}")
 
 
-resetdb()
+
 localdb = load()
 save(localdb)
 
@@ -210,7 +210,7 @@ def new_mission():
   type("What is the name of your mission?")
   mission_name = input(">: ")
   r = {}
-  m = {"Name": mission_name, "Rocket": r, "State": "Not Started", "Goal": 1}
+  m = {"Name": mission_name, "Rocket": r, "State": "", "Goal": 1}
   type("Please select a Launch Vehicle")
   sleep(1)
   try:
