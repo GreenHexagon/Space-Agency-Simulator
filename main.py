@@ -201,6 +201,8 @@ def new_lv():
   else:
     lv["Payload Capability"] = lx/2
   localdb["Launch Vehicles"].append(lv)
+
+  save(localdb)
   mainscreen()
   return lv
   
