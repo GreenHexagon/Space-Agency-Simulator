@@ -330,11 +330,14 @@ def view_mission():
     mainscreen()
   type("Which orbit?")
   if a["Low Earth Orbit"] == True:
-    type("1: Low Earth Orbit")
+    type("1: Low Earth Orbit") 
+  if a["Med Earth Orbit"] == True:
+    type("2: Med Earth Orbit")
   oz = int(input(">: "))
-  
   if oz == 1:
     z = "LEO"
+  if oz == 2:
+    z = "MEO"
   xz = 1
   type("Which mission?")
   for i in x:
