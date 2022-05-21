@@ -306,9 +306,10 @@ def st_mission():
   elif xx > 90 and xx <100:
     type("Your mission failed to launch")
     sleep(1)
+    mm["State"] = "Failed"
     localdb["Missions"].remove(mm)
     localdb["Failed Missions"].append(mm)
-    mm["State"] = "Failed"
+    
     sleep(1)
     mainscreen()
   elif xx > 100 and xx < 190 and mm["Goal"] == 2:
@@ -322,9 +323,10 @@ def st_mission():
   elif xx > 190 and xx < 200:
     type("Your mission failed to launch")
     sleep(1)
+    mm["State"] = "Failed"
     localdb["Missions"].remove(mm)
     localdb["Failed Missions"].append(mm)
-    mm["State"] = "Failed"
+    
     sleep(1)
     mainscreen()
   elif xx > 200 and xx < 290 and mm["Goal"] == 3:
@@ -338,9 +340,10 @@ def st_mission():
   elif xx > 290 and xx < 300:
     type("Your mission failed to launch")
     sleep(1)
+    mm["State"] = "Failed"
     localdb["Missions"].remove(mm)
     localdb["Failed Missions"].append(mm)
-    mm["State"] = "Failed"
+    
     sleep(1)
     mainscreen()
   mainscreen()
