@@ -295,10 +295,8 @@ def st_mission():
   type("Your mission is launching")
   sleep(2)
   mlv = mm["Rocket"]
-  print(mm["Goal"])
   mmr = mlv["Launch Vehicle"]
   xx = random.randrange(mmr["Payload Capability"] * 90,mmr["Payload Capability"] * 110)
-  print(xx)
   if xx < 90 and mm["Goal"] == 1: 
     mm["State"] = "LEO"
     type(f"Mission Success, you have launched a payload into {mm['State']}")
