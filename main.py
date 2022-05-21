@@ -282,6 +282,7 @@ def st_mission():
   if xx < 90 and mm["Goal"] == 1: 
     mm["State"] = "LEO"
     type(f"Mission Success, you have launched a payload into {mm['State']}")
+    localdb["Funding"] += 10
     sleep(1)
     awardAccolade("Low Earth Orbit")
     sleep(1)
@@ -296,6 +297,7 @@ def st_mission():
   elif xx > 100 < 190 and mm["Goal"] == 2:
     mm["State"] = "MEO"
     type(f"Mission Success, you have launched a payload into {mm['State']}")
+    localdb["Funding"] += 25
     sleep(1)
     awardAccolade("Med Earth Orbit")
     localdb["Missions"].remove(mm)
@@ -497,6 +499,7 @@ def mainscreen():
     type("Not an accepted value", 0)
     sleep(3)
     mainscreen()
+
 
 
 intro()
