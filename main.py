@@ -174,14 +174,15 @@ def new_lv():
   sleep(1)
   type("What second stage engine are you using?")
   sleep(1)
+  lv_second_stage_rank = 0
   if r["Second Stage Rank"] == 0:
     type("You have not researched second stages")
-    lv_second_stage_rank = 0
-    sleep(1)
+    
   if r["Second Stage Rank"] >= 1:
     type("1: RocketDyne RL10")
   if r["Second Stage Rank"] >= 2:
     type("2: RocketDyne J-2")
+  if r["Second Stage Rank"] != 0:
     lv_second_stage_rank = int(input(">: "))
   lv["Second Stage Engine"] = lv_second_stage_rank
   type("What boosters are you using?")
