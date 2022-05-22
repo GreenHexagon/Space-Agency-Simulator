@@ -44,12 +44,13 @@ def save(localdb):
     del x
   except KeyError:
     db["Name"] = ""
-    db["Funding"] = 100
+    db["Funding"] = 150
     db["Missions"] = []
     db["Successful Missions"] = []
     db["Failed Missions"] = []
     db["Research"] = {
       "Payload Rank": 1,
+      "Third Stage Rank": 0,
       "Second Stage Rank": 0,
       "First Stage Rank": 1,
       "Boosters Rank": 0,
@@ -142,6 +143,9 @@ def new_pl():
   if r["Payload Rank"] >= 3:
     sleep(1)
     type("3: High Altitude Satillite")
+  if r["Payload Rank"] >= 4:
+    sleep(1)
+    type("4: Lunar Flyby Probe")
   pl_type = int(input(">: "))
   if pl_type == 1:
     pl["Type"] = "Satellite"
@@ -149,8 +153,12 @@ def new_pl():
     pl["Type"] = "Medium Altitude Satellite"
   if pl_type == 3:
     pl["Type"] = "High Altitude Satellite"
+  if pl_type == 4:
+    pl["Type"] = "Lunar Flyby Probe"
   pl["Orbital Capability"] = pl_type
   localdb["Payloads"].append(pl)
+
+  save(localdb)
   mainscreen()
   return pl
   
@@ -168,37 +176,56 @@ def new_lv():
     type("2: RocketDyne H-1")
   if r["First Stage Rank"] >= 3:
     type("3: RocketDyne H-1 x8")
+  if r["First Stage Rank"] >= 4:
+    type("4: RocketDyne F-1 x5")
   lv_first_stage_rank = int(input(">: "))
   lv["First Stage Engine"] = lv_first_stage_rank
   sleep(1)
   type("What second stage engine are you using?")
   sleep(1)
+  lv_second_stage_rank = 0
   if r["Second Stage Rank"] == 0:
     type("You have not researched second stages")
-    lv_second_stage_rank = 0
-    sleep(1)
+    
   if r["Second Stage Rank"] >= 1:
     type("1: RocketDyne RL10")
   if r["Second Stage Rank"] >= 2:
     type("2: RocketDyne J-2")
+  if r["Second Stage Rank"] >= 3:
+    type("3: RocketDyne J-2 x5")
+  if r["Second Stage Rank"] >= 4:
+    type("4: RocketDyne J-2 x8 ")
+  if r["Second Stage Rank"] != 0:
     lv_second_stage_rank = int(input(">: "))
   lv["Second Stage Engine"] = lv_second_stage_rank
+  type("What third stage are you using?")
+  sleep(1)
+  lv_third_stage_rank = 0
+  if r["Third Stage Rank"] == 0:
+    type("You have not researched third stages")
+  if r["Third Stage Rank"] != 0:
+    lv_third_stage_rank = int(input(">: "))
+  lv["Third Stage Engine"] = lv_third_stage_rank
   type("What boosters are you using?")
   sleep(1)
+  lv_boosters_rank = 0
   if r["Boosters Rank"] == 0:
     type("You have not researched boosters")
-    lv_boosters_rank = 0
     sleep(1)
+  if r["Boosters Rank"] != 0:
+    lv_boosters_rank = int(input(">: "))
   lv["Boosters"] = lv_boosters_rank
   type(f"Creating Launch Vehicle {lv['Name']}")
-  lx = lv["First Stage Engine"] + lv["Second Stage Engine"] + lv["Boosters"]
-  if lv["Second Stage Engine"] == 0 and lv["Boosters"] == 0:
+  lx = lv["First Stage Engine"] + lv["Second Stage Engine"] + lv["Boosters"] + lv["Third Stage Engine"]
+  if lv["Second Stage Engine"] == 0 and lv["Boosters"] == 0 and lv["Third Stage Engine"] == 0:
     lv["Payload Capability"] = lx
-  elif lv["Second Stage Engine"] > 0 and lv["Boosters"] > 0: 
-    lv["Payload Capability"] = lx/3
+  elif lv["Second Stage Engine"] > 0 and lv["Boosters"] > 0 and lv["Third Stage Engine"] > 0: 
+    lv["Payload Capability"] = lx/4
   else:
     lv["Payload Capability"] = lx/2
   localdb["Launch Vehicles"].append(lv)
+
+  save(localdb)
   mainscreen()
   return lv
   
@@ -209,7 +236,7 @@ def new_mission():
   type("What is the name of your mission?")
   mission_name = input(">: ")
   r = {}
-  m = {"Name": mission_name, "Rocket": r, "State": "Not Started", "Goal": 1}
+  m = {"Name": mission_name, "Rocket": r, "State": "", "Goal": 1}
   type("Please select a Launch Vehicle")
   sleep(1)
   try:
@@ -222,7 +249,7 @@ def new_mission():
     w = 1
     for i in x:
       
-      type(f"{w}: {i['Name']}")
+      rgbcolortype(f"{w}: {i['Name']}",255,165,0)
       w += 1
     ww = input(">: ")
     w = int(ww)
@@ -238,7 +265,7 @@ def new_mission():
   else:
     z = 1
     for i in y:
-      type(f"{z}: {i['Name']}")
+      rgbcolortype(f"{z}: {i['Name']}",255,165,0)
       z += 1
     zz = input(">: ")
     z = int(zz)
@@ -281,7 +308,7 @@ def st_mission():
   else:
     z = 1
     for i in m:
-      type(f"{z}: {i['Name']}")
+      rgbcolortype(f"{z}: {i['Name']}",255,165,0)
       z += 1
     zz = input(">: ")
     z = int(zz)
@@ -289,10 +316,8 @@ def st_mission():
   type("Your mission is launching")
   sleep(2)
   mlv = mm["Rocket"]
-  print(mm["Goal"])
   mmr = mlv["Launch Vehicle"]
   xx = random.randrange(mmr["Payload Capability"] * 90,mmr["Payload Capability"] * 110)
-  print(xx)
   if xx < 90 and mm["Goal"] == 1: 
     mm["State"] = "LEO"
     type(f"Mission Success, you have launched a payload into {mm['State']}")
@@ -305,9 +330,10 @@ def st_mission():
   elif xx > 90 and xx <100:
     type("Your mission failed to launch")
     sleep(1)
+    mm["State"] = "Failed"
     localdb["Missions"].remove(mm)
     localdb["Failed Missions"].append(mm)
-    mm["State"] = "Failed"
+    
     sleep(1)
     mainscreen()
   elif xx > 100 and xx < 190 and mm["Goal"] == 2:
@@ -321,9 +347,10 @@ def st_mission():
   elif xx > 190 and xx < 200:
     type("Your mission failed to launch")
     sleep(1)
+    mm["State"] = "Failed"
     localdb["Missions"].remove(mm)
     localdb["Failed Missions"].append(mm)
-    mm["State"] = "Failed"
+    
     sleep(1)
     mainscreen()
   elif xx > 200 and xx < 290 and mm["Goal"] == 3:
@@ -337,11 +364,18 @@ def st_mission():
   elif xx > 290 and xx < 300:
     type("Your mission failed to launch")
     sleep(1)
+    mm["State"] = "Failed"
     localdb["Missions"].remove(mm)
     localdb["Failed Missions"].append(mm)
-    mm["State"] = "Failed"
+    
     sleep(1)
     mainscreen()
+  else:
+    type("Your mission failed to launch")
+    sleep(1)
+    mm["State"] = "Failed"
+    localdb["Missions"].remove(mm)
+    localdb["Failed Missions"].append(mm)
   mainscreen()
 
 def view_mission():
@@ -355,11 +389,11 @@ def view_mission():
     mainscreen()
   type("Which orbit?")
   if a["Low Earth Orbit"] == True:
-    type("1: Low Earth Orbit") 
+    rgbcolortype("1: Low Earth Orbit",255,165,0) 
   if a["Med Earth Orbit"] == True:
-    type("2: Med Earth Orbit")
+    rgbcolortype("2: Med Earth Orbit",255,165,0)
   if a["High Earth Orbit"] == True:
-    type("3: High Earth Orbit")
+   rgbcolortype("3: High Earth Orbit",255,165,0)
   oz = int(input(">: "))
   if oz == 1:
     z = "LEO"
@@ -371,7 +405,7 @@ def view_mission():
   type("Which mission?")
   for i in x:
     if i["State"] == z:
-      type(f"{xz}: {i['Name']}")
+      rgbcolortype(f"{xz}: {i['Name']}",255,165,0)
     else:
       pass
     xz += 1
@@ -385,7 +419,7 @@ def view_mission():
     pass
   type(f"Name: {sm['Name']}")
   type(f"Rocket: {sm['Rocket']['Launch Vehicle']['Name']} \nPayload: {sm['Rocket']['Payload']['Name']} {sm['Rocket']['Payload']['Type']}")
-  type(f"Orbit: {sm['State']}")
+  type(f"State: {sm['State']}")
   type("Press any key to return to the main screen")
   input("")
   save(localdb)
@@ -402,11 +436,11 @@ def view_pmissions():
     mainscreen()
   type("Succesful Missions")
   for i in s:
-    type(f"{i['Name']}: {i['State']}")
+    rgbcolortype(f"{i['Name']}: {i['State']}",0,255,0)
   sleep(1)
   type("Failed Missions")
   for i in f:
-    type(f"{i['Name']}: {i['State']}")
+    rgbcolortype(f"{i['Name']}: {i['State']}", 255,0,0)
   sleep(1)
   type("Press any key to return to the main screen")
   input("")
@@ -484,6 +518,11 @@ def mainscreen():
   type(f"""\033[38;2;255;250;0m{localdb["Name"]}\33[0m
 \033[38;2;60;230;30m{localdb["Funding"]}M USD\33[0m
 \033[38;2;255;165;0m       
+First Stage Experience:\033[38;2;0;255;0m Rank {localdb["Research"]["First Stage Rank"]}
+\033[38;2;255;165;0mSecond Stage Experience:\033[38;2;0;255;0m Rank {localdb["Research"]["Second Stage Rank"]}
+\033[38;2;255;165;0mBoosters Experience:\033[38;2;0;255;0m Rank {localdb["Research"]["Boosters Rank"]}\033[38;2;255;165;0m
+Payload Experience: \033[38;2;0;255;0m Rank {localdb["Research"]["Payload Rank"]}\033[38;2;255;165;0m
+       
 1: New Mission
 2: Start Mission
 3: New Launch Vehicle
