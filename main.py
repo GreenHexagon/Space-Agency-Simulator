@@ -44,12 +44,13 @@ def save(localdb):
     del x
   except KeyError:
     db["Name"] = ""
-    db["Funding"] = 100
+    db["Funding"] = 150
     db["Missions"] = []
     db["Successful Missions"] = []
     db["Failed Missions"] = []
     db["Research"] = {
       "Payload Rank": 1,
+      "Third Stage Rank": 0,
       "Second Stage Rank": 0,
       "First Stage Rank": 1,
       "Boosters Rank": 0,
@@ -97,7 +98,7 @@ def awardAccolade(award):
     print(f"You have achieved {award}")
 
 
-
+resetdb()
 localdb = load()
 save(localdb)
 
@@ -143,6 +144,9 @@ def new_pl():
   if r["Payload Rank"] >= 3:
     sleep(1)
     type("3: High Altitude Satillite")
+  if r["Payload Rank"] >= 4:
+    sleep(1)
+    type("4: Lunar Flyby Probe")
   pl_type = int(input(">: "))
   if pl_type == 1:
     pl["Type"] = "Satellite"
@@ -150,6 +154,8 @@ def new_pl():
     pl["Type"] = "Medium Altitude Satellite"
   if pl_type == 3:
     pl["Type"] = "High Altitude Satellite"
+  if pl_type == 4:
+    pl["Type"] = "Lunar Flyby Probe"
   pl["Orbital Capability"] = pl_type
   localdb["Payloads"].append(pl)
 
@@ -171,6 +177,8 @@ def new_lv():
     type("2: RocketDyne H-1")
   if r["First Stage Rank"] >= 3:
     type("3: RocketDyne H-1 x8")
+  if r["First Stage Rank"] >= 4:
+    type("4: RocketDyne F-1 x5")
   lv_first_stage_rank = int(input(">: "))
   lv["First Stage Engine"] = lv_first_stage_rank
   sleep(1)
@@ -184,22 +192,36 @@ def new_lv():
     type("1: RocketDyne RL10")
   if r["Second Stage Rank"] >= 2:
     type("2: RocketDyne J-2")
+  if r["Second Stage Rank"] >= 3:
+    type("3: RocketDyne J-2 x5")
+  if r["Second Stage Rank"] >= 4:
+    type("4: RocketDyne J-2 x8 ")
   if r["Second Stage Rank"] != 0:
     lv_second_stage_rank = int(input(">: "))
   lv["Second Stage Engine"] = lv_second_stage_rank
+  type("What third stage are you using?")
+  sleep(1)
+  lv_third_stage_rank = 0
+  if r["Third Stage Rank"] == 0:
+    type("You have not researched third stages")
+  if r["Third Stage Rank"] != 0:
+    lv_third_stage_rank = int(input(">: "))
+  lv["Third Stage Engine"] = lv_third_stage_rank
   type("What boosters are you using?")
   sleep(1)
+  lv_boosters_rank = 0
   if r["Boosters Rank"] == 0:
     type("You have not researched boosters")
-    lv_boosters_rank = 0
     sleep(1)
+  if r["Boosters Rank"] != 0:
+    lv_boosters_rank = int(input(">: "))
   lv["Boosters"] = lv_boosters_rank
   type(f"Creating Launch Vehicle {lv['Name']}")
-  lx = lv["First Stage Engine"] + lv["Second Stage Engine"] + lv["Boosters"]
-  if lv["Second Stage Engine"] == 0 and lv["Boosters"] == 0:
+  lx = lv["First Stage Engine"] + lv["Second Stage Engine"] + lv["Boosters"] + lv["Third Stage Engine"]
+  if lv["Second Stage Engine"] == 0 and lv["Boosters"] == 0 and lv["Third Stage Engine"] == 0:
     lv["Payload Capability"] = lx
-  elif lv["Second Stage Engine"] > 0 and lv["Boosters"] > 0: 
-    lv["Payload Capability"] = lx/3
+  elif lv["Second Stage Engine"] > 0 and lv["Boosters"] > 0 and lv["Third Stage Engine"] > 0: 
+    lv["Payload Capability"] = lx/4
   else:
     lv["Payload Capability"] = lx/2
   localdb["Launch Vehicles"].append(lv)
