@@ -61,10 +61,10 @@ def save(localdb):
       "Low Earth Orbit": False,
       "Med Earth Orbit": False,
       "High Earth Orbit": False,
-      "Moon Fly-by": False,
-      "High Moon Orbit": False,
-      "Medium Moon Orbit": False,
-      "Low Moon Orbit": False,
+      "Lunar Fly-by": False,
+      "High Lunar Orbit": False,
+      "Medium Lunar Orbit": False,
+      "Low Lunar Orbit": False,
       "Moon Landing": False,
       "Moon Landing/Return": False,
       "Moon Habitat": False,
@@ -283,6 +283,8 @@ def new_mission():
       type("2: MEO")
     if p["Orbital Capability"] >= 3:
       type("3: HEO")
+    if p["Orbital Capability"] >= 4:
+      type("4: LFB")
     g = int(input(">: "))
     m["Goal"] = g
 
@@ -370,6 +372,20 @@ def st_mission():
     
     sleep(1)
     mainscreen()
+  elif xx > 300 and xx < 390 and mm["Goal"] == 4:
+    mm["State"] = "LFB"
+    type(f"Mission Success, you have launched a payload into {mm['State']}")
+    localdb["Funding"] += 50
+    sleep(1)
+    awardAccolade("Lunar Flyby")
+    localdb["Missions"].remove(mm)
+    localdb["Successful Missions"].append(mm)
+  elif xx > 390 and xx < 400:
+    type("Your mission failed to launch")
+    sleep(1)
+    mm["State"] = "Failed"
+    localdb["Missions"].remove(mm)
+    localdb["Failed Missions"].append(mm)
   else:
     type("Your mission failed to launch")
     sleep(1)
@@ -394,6 +410,8 @@ def view_mission():
     rgbcolortype("2: Med Earth Orbit",255,165,0)
   if a["High Earth Orbit"] == True:
    rgbcolortype("3: High Earth Orbit",255,165,0)
+  if a["Lunar Flyby"] == True:
+    rgbcolortype("4: Lunar Flyby", 255,165,0)
   oz = int(input(">: "))
   if oz == 1:
     z = "LEO"
@@ -401,6 +419,8 @@ def view_mission():
     z = "MEO"
   if oz == 3:
     z = "HEO"
+  if oz == 4:
+    z = "LFB"
   xz = 1
   type("Which mission?")
   for i in x:
@@ -487,7 +507,8 @@ def research():
   sleep(1)
   type("1: First Stages")
   type("2: Second Stages")
-  type("3: Payloads")
+  type("3: Third Stages")
+  type("4: Payloads")
 
   xr = int(input(">: "))
   if xr == 1:
@@ -496,6 +517,7 @@ def research():
       mainscreen()
     localdb["Research"]["First Stage Rank"] += 1
     localdb["Funding"] -= 10
+    save(localdb)
     mainscreen()
   if xr == 2:
     if localdb["Funding"] < 25:
@@ -503,8 +525,17 @@ def research():
       mainscreen()
     localdb["Research"]["Second Stage Rank"] += 1
     localdb["Funding"] -= 50
+    save(localdb)
     mainscreen()
   if xr == 3:
+    if localdb["Funding"] < 100:
+      type("You don't have enough money")
+      mainscreen()
+    localdb["Research"]["Third Stage Rank"] += 1
+    localdb["Funding"] -= 100
+    save(localdb)
+    mainscreen()
+  if xr == 4:
     if localdb["Funding"] < 50:
       type("You don't have enough money")
       mainscreen()
