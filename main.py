@@ -131,9 +131,10 @@ def awardAccolade(award):
     x[award] = True
     print(f"You have achieved {award}")
 
-
+resetdb()
 localdb = load()
-save(localdb)
+save(localdb, true)
+
 
 def intro():
   try:
@@ -162,6 +163,7 @@ def intro():
     if localdb["Name"] == "opdebug":
       save(localdb,true)
     else:
+      resetdb()
       save(localdb)
 
 def new_pl():
