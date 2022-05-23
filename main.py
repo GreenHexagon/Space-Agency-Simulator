@@ -184,6 +184,8 @@ def new_lv():
     type("3: RocketDyne H-1 x8")
   if r["First Stage Rank"] >= 4:
     type("4: RocketDyne F-1 x5")
+  if r["First Stage Rank"] >= 5:
+    type("5: RocketDyne F-1 x8")
   lv_first_stage_rank = int(input(">: "))
   lv["First Stage Engine"] = lv_first_stage_rank
   sleep(1)
@@ -201,6 +203,8 @@ def new_lv():
     type("3: RocketDyne J-2 x5")
   if r["Second Stage Rank"] >= 4:
     type("4: RocketDyne J-2 x8 ")
+  if r["Second Stage Rank"] >= 5:
+    type("5: RocketDyne J-3")
   if r["Second Stage Rank"] != 0:
     lv_second_stage_rank = int(input(">: "))
   lv["Second Stage Engine"] = lv_second_stage_rank
@@ -209,6 +213,8 @@ def new_lv():
   lv_third_stage_rank = 0
   if r["Third Stage Rank"] == 0:
     type("You have not researched third stages")
+  if r["Third Stage Rank"] >= 1:
+    type("1: RocketDyne J-2")
   if r["Third Stage Rank"] != 0:
     lv_third_stage_rank = int(input(">: "))
   lv["Third Stage Engine"] = lv_third_stage_rank
