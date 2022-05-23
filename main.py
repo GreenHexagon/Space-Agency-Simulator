@@ -146,6 +146,9 @@ def new_pl():
   if r["Payload Rank"] >= 4:
     sleep(1)
     type("4: Lunar Flyby Probe")
+  if r["Payload Rank"] >= 5:
+    sleep(1)
+    type("5: High Altitude Lunar Satellite")
   pl_type = int(input(">: "))
   if pl_type == 1:
     pl["Type"] = "Satellite"
@@ -155,6 +158,9 @@ def new_pl():
     pl["Type"] = "High Altitude Satellite"
   if pl_type == 4:
     pl["Type"] = "Lunar Flyby Probe"
+  if pl_type == 5:
+    pl["Type"] = "High Altitude Lunar Satellite"
+  
   pl["Orbital Capability"] = pl_type
   localdb["Payloads"].append(pl)
 
