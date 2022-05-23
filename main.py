@@ -32,7 +32,7 @@ def rgbcolortype(w, r, g, b, delay=0.025, instant=False, newline=True):
   sys.stdout.write(f"\033[0m")
   sys.stdout.flush()
 
-def save(localdb):
+def save(localdb, debug=false):
   try:
     x = db["Name"]
     x = db["Funding"]
@@ -43,38 +43,72 @@ def save(localdb):
     x = db["Accolades"]
     del x
   except KeyError:
-    db["Name"] = ""
-    db["Funding"] = 150
-    db["Missions"] = []
-    db["Successful Missions"] = []
-    db["Failed Missions"] = []
-    db["Research"] = {
-      "Payload Rank": 1,
-      "Third Stage Rank": 0,
-      "Second Stage Rank": 0,
-      "First Stage Rank": 1,
-      "Boosters Rank": 0,
-    }
-    db["Launch Vehicles"] = []
-    db["Payloads"] = []
-    db["Accolades"] = {
-      "Low Earth Orbit": False,
-      "Med Earth Orbit": False,
-      "High Earth Orbit": False,
-      "Lunar Fly-by": False,
-      "High Lunar Orbit": False,
-      "Medium Lunar Orbit": False,
-      "Low Lunar Orbit": False,
-      "Moon Landing": False,
-      "Moon Landing/Return": False,
-      "Moon Habitat": False,
-      "Space Station": False,
-      "Deep Space": False,
-      "???": False
-    }
-    _x = [i for i in localdb]
-    for i in _x:
-      db[i] = localdb[i]
+    if debug == True:
+      db["Name"] = ""
+      db["Funding"] = 1500
+      db["Missions"] = []
+      db["Successful Missions"] = []
+      db["Failed Missions"] = []
+      db["Research"] = {
+        "Payload Rank": 10,
+        "Third Stage Rank": 10,
+        "Second Stage Rank": 10,
+        "First Stage Rank": 10,
+        "Boosters Rank": 0,
+      }  
+      db["Launch Vehicles"] = []
+      db["Payloads"] = []
+      db["Accolades"] = {
+        "Low Earth Orbit": False,
+        "Med Earth Orbit": False,
+        "High Earth Orbit": False,
+        "Lunar Fly-by": False,
+        "High Lunar Orbit": False,
+        "Medium Lunar Orbit": False,
+        "Low Lunar Orbit": False,
+        "Moon Landing": False,
+        "Moon Landing/Return": False,
+        "Moon Habitat": False,
+        "Space Station": False,
+        "Deep Space": False,
+        "???": False
+      }
+      _x = [i for i in localdb]
+      for i in _x:
+        db[i] = localdb[i]
+    else:
+      db["Name"] = ""
+      db["Funding"] = 150
+      db["Missions"] = []
+      db["Successful Missions"] = []
+      db["Failed Missions"] = []
+      db["Research"] = {
+        "Payload Rank": 1,
+        "Third Stage Rank": 0,
+        "Second Stage Rank": 0,
+        "First Stage Rank": 1,
+        "Boosters Rank": 0,
+      }  
+      db["Launch Vehicles"] = []
+      db["Payloads"] = []
+      db["Accolades"] = {
+        "Low Earth Orbit": False,
+        "Med Earth Orbit": False,
+        "High Earth Orbit": False,
+        "Lunar Fly-by": False,
+        "High Lunar Orbit": False,
+        "Medium Lunar Orbit": False,
+        "Low Lunar Orbit": False,
+        "Moon Landing": False,
+        "Moon Landing/Return": False,
+        "Moon Habitat": False,
+        "Space Station": False,
+        "Deep Space": False,
+        "???": False
+      }
+      _x = [i for i in localdb]
+      for i in _x:
+        db[i] = localdb[i]
   else:
     _x = [i for i in localdb]
     for i in _x:
@@ -125,7 +159,10 @@ def intro():
     sleep(1)
     type("Please enter your agency name", 0.025, newline=False)
     localdb["Name"] = input(": ")
-  save(localdb)
+    if localdb["Name"] == "opdebug":
+      save(localdb,true)
+    else:
+      save(localdb)
 
 def new_pl():
   clr()
@@ -555,6 +592,7 @@ def research():
     localdb["Funding"] -= 50
     save(localdb)
     mainscreen()
+
 
 def mainscreen():
   clr()
