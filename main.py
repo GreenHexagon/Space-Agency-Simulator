@@ -135,7 +135,12 @@ def awardAccolade(award):
 
 resetdb()
 localdb = load()
-save(localdb, false)
+check = input("")
+if check == "uuddlrlr":
+  save(localdb, true)
+else:
+  save(localdb)
+
 
 #game defs
 def intro():
@@ -660,7 +665,7 @@ Payload Experience: \033[38;2;0;255;0m Rank {localdb["Research"]["Payload Rank"]
     sleep(2)
     save(localdb)
     mainscreen()
-  if mainscreen_input > 9:
+  if mainscreen_input > 9 < 666:
     type("Not an accepted value", 0)
     save(localdb)
     sleep(3)
