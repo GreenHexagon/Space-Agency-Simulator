@@ -133,7 +133,6 @@ def awardAccolade(award):
     print(f"You have achieved {award}")
 
 
-resetdb()
 localdb = load()
 check = input("")
 if check == "uuddlrlr":
