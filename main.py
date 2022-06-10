@@ -5,6 +5,7 @@ from replit import db
 true = True
 false = False
 
+# Defs
 def type(w, delay = 0.025, instant=False, newline=True):
   if instant == True and delay !=0:
     delay = 0
@@ -135,7 +136,7 @@ def awardAccolade(award):
 localdb = load()
 save(localdb, true)
 
-
+#game defs
 def intro():
   try:
     x = localdb["Name"]
@@ -489,7 +490,8 @@ def view_mission():
   else:
     pass
   type(f"Name: {sm['Name']}")
-  type(f"Rocket: {sm['Rocket']['Launch Vehicle']['Name']} \nPayload: {sm['Rocket']['Payload']['Name']} {sm['Rocket']['Payload']['Type']}")
+  type(f"Rocket: {sm['Rocket']['Launch Vehicle']['Name']}")
+  type(f"Payload: {sm['Rocket']['Payload']['Name']} {sm['Rocket']['Payload']['Type']}")
   type(f"State: {sm['State']}")
   type("Press any key to return to the main screen")
   input("")
