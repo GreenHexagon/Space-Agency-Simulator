@@ -42,6 +42,8 @@ def save(localdb, debug=false):
     x = db["Failed Missions"]
     x = db["Research"]
     x = db["Accolades"]
+    if X == None:
+      raise KeyError
     del x
   except KeyError:
     if debug == True:
@@ -115,6 +117,16 @@ def save(localdb, debug=false):
     for i in _x:
       db[i] = localdb[i]
 
+def reset():
+  db["Name"] = None
+  db["Funding"] = None
+  db["Missions"] = None
+  db["Successful Missions"] = None
+  db["Failed Missions"] = None
+  db["Research"] = None
+  db["Launch Vehicles"] = None
+  db["Payloads"] = None
+  db["Accolades"] = None
 def load():
   localdb = {}
   _x = [i for i in db]
@@ -134,7 +146,7 @@ def awardAccolade(award):
 
 
 localdb = load()
-check = input("")
+check = input("Press Enter to Start")
 if check == "uuddlrlr":
   save(localdb, true)
 else:
@@ -669,6 +681,9 @@ Payload Experience: \033[38;2;0;255;0m Rank {localdb["Research"]["Payload Rank"]
     save(localdb)
     sleep(3)
     mainscreen()
+  if mainscreen_input == 666:
+    reset()
+    save(localdb)
 
 
 
