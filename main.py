@@ -47,68 +47,48 @@ def save(localdb, debug=false):
     del x
   except KeyError:
     if debug == True:
-      """db["Name"] = ""
-      db["Funding"] = 1500
-      db["Missions"] = []
-      db["Successful Missions"] = []
-      db["Failed Missions"] = []
-      db["Research"] = {
-        "Payload Rank": 10,
-        "Third Stage Rank": 10,
-        "Second Stage Rank": 10,
-        "First Stage Rank": 10,
-        "Boosters Rank": 0,
-      }  
-      db["Launch Vehicles"] = []
-      db["Payloads"] = []
-      db["Accolades"] = {
-        "Low Earth Orbit": False,
-        "Med Earth Orbit": False,
-        "High Earth Orbit": False,
-        "Lunar Fly-by": False,
-        "High Lunar Orbit": False,
-        "Medium Lunar Orbit": False,
-        "Low Lunar Orbit": False,
-        "Moon Landing": False,
-        "Moon Landing/Return": False,
-        "Moon Habitat": False,
-        "Space Station": False,
-        "Deep Space": False,
-        "???": False
-      }"""
-      _x = [i for i in localdb]
-      for i in _x:
-        db[i] = localdb[i]
+      for i in db:
+        if i == None:
+          if i == "Name":
+            i = ""
+          if i == "Funding":
+            i = 1500
+          if i == "Missions":
+            i = []
+          if i == "Successful Missions":
+            i = []
+          if i == "Failed Missions":
+            i = []
+          if i == "Research":
+            i = {
+              "Payload Rank": 10,
+              "Third Stage Rank": 10,
+              "Second Stage Rank": 10,
+              "First Stage Rank": 10,
+              "Boosters Rank": 0,
+            }  
+          if i == "Launch Vehicles":
+            i = []
+          if i == "Payloads":
+            i = []
+          if i == "Accolades":
+            i = {
+              "Low Earth Orbit": False,
+              "Med Earth Orbit": False,
+              "High Earth Orbit": False,
+              "Lunar Fly-by": False,
+              "High Lunar Orbit": False,
+              "Medium Lunar Orbit": False,
+              "Low Lunar Orbit": False,
+              "Moon Landing": False,
+              "Moon Landing/Return": False,
+              "Moon Habitat": False,
+              "Space Station": False,
+              "Deep Space": False,
+              "???": False
+            }
+        localdb[i] == db[i]
     else:
-      """db["Name"] = ""
-      db["Funding"] = 150
-      db["Missions"] = []
-      db["Successful Missions"] = []
-      db["Failed Missions"] = []
-      db["Research"] = {
-        "Payload Rank": 1,
-        "Third Stage Rank": 0,
-        "Second Stage Rank": 0,
-        "First Stage Rank": 1,
-        "Boosters Rank": 0,
-      }  
-      db["Launch Vehicles"] = []
-      db["Payloads"] = []
-      db["Accolades"] = {
-        "Low Earth Orbit": False,
-        "Med Earth Orbit": False,
-        "High Earth Orbit": False,
-        "Lunar Fly-by": False,
-        "High Lunar Orbit": False,
-        "Medium Lunar Orbit": False,
-        "Low Lunar Orbit": False,
-        "Moon Landing": False,
-        "Moon Landing/Return": False,
-        "Moon Habitat": False,
-        "Space Station": False,
-        "Deep Space": False,
-        "???": False
-      }"""
       for i in db:
         if i == None:
           if i == "Name":
@@ -129,11 +109,27 @@ def save(localdb, debug=false):
               "First Stage Rank": 1,
               "Boosters Rank": 0,
             }  
-        else:
-          continue
-      _x = [i for i in localdb]
-      for i in _x:
-        db[i] = localdb[i]
+          if i == "Launch Vehicles":
+            i = []
+          if i == "Payloads":
+            i = []
+          if i == "Accolades":
+            i = {
+              "Low Earth Orbit": False,
+              "Med Earth Orbit": False,
+              "High Earth Orbit": False,
+              "Lunar Fly-by": False,
+              "High Lunar Orbit": False,
+              "Medium Lunar Orbit": False,
+              "Low Lunar Orbit": False,
+              "Moon Landing": False,
+              "Moon Landing/Return": False,
+              "Moon Habitat": False,
+              "Space Station": False,
+              "Deep Space": False,
+              "???": False
+            }
+        localdb[i] == db[i]
   else:
     _x = [i for i in localdb]
     for i in _x:
