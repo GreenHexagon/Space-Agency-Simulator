@@ -109,6 +109,28 @@ def save(localdb, debug=false):
         "Deep Space": False,
         "???": False
       }"""
+      for i in db:
+        if i == None:
+          if i == "Name":
+            i = ""
+          if i == "Funding":
+            i = 150
+          if i == "Missions":
+            i = []
+          if i == "Successful Missions":
+            i = []
+          if i == "Failed Missions":
+            i = []
+          if i == "Research":
+            i = {
+              "Payload Rank": 1,
+              "Third Stage Rank": 0,
+              "Second Stage Rank": 0,
+              "First Stage Rank": 1,
+              "Boosters Rank": 0,
+            }  
+        else:
+          continue
       _x = [i for i in localdb]
       for i in _x:
         db[i] = localdb[i]
