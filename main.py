@@ -1,9 +1,10 @@
 import sys, os, random
 from time import sleep
-from replit import db
 
+# convienience
 true = True
 false = False
+
 
 # Defs
 def type(w, delay = 0.025, instant=False, newline=True):
@@ -34,6 +35,7 @@ def rgbcolortype(w, r, g, b, delay=0.025, instant=False, newline=True):
   sys.stdout.flush()
 
 def save(localdb, debug=false):
+  rgbcolortype("Warning: Database is being transfered. Your data is in danger of being deleted at any movement.",255,0,0)
   try:
     x = db["Name"]
     x = db["Funding"]
@@ -43,9 +45,94 @@ def save(localdb, debug=false):
     x = db["Research"]
     x = db["Accolades"]
     if x == None:
-      raise KeyError
+      raise ResetErr
     del x
   except KeyError:
+    if debug == True:
+      for i in db:
+        if i == None:
+          if i == "Name":
+            i = ""
+          if i == "Funding":
+            i = 1500
+          if i == "Missions":
+            i = []
+          if i == "Successful Missions":
+            i = []
+          if i == "Failed Missions":
+            i = []
+          if i == "Research":
+            i = {
+              "Payload Rank": 10,
+              "Third Stage Rank": 10,
+              "Second Stage Rank": 10,
+              "First Stage Rank": 10,
+              "Boosters Rank": 0,
+            }  
+          if i == "Launch Vehicles":
+            i = []
+          if i == "Payloads":
+            i = []
+          if i == "Accolades":
+            i = {
+              "Low Earth Orbit": False,
+              "Med Earth Orbit": False,
+              "High Earth Orbit": False,
+              "Lunar Fly-by": False,
+              "High Lunar Orbit": False,
+              "Medium Lunar Orbit": False,
+              "Low Lunar Orbit": False,
+              "Moon Landing": False,
+              "Moon Landing/Return": False,
+              "Moon Habitat": False,
+              "Space Station": False,
+              "Deep Space": False,
+              "???": False
+            }
+        db[i] == localdb[i]
+    else:
+      for i in db:
+        if i == None:
+          if i == "Name":
+            i = ""
+          if i == "Funding":
+            i = 150
+          if i == "Missions":
+            i = []
+          if i == "Successful Missions":
+            i = []
+          if i == "Failed Missions":
+            i = []
+          if i == "Research":
+            i = {
+              "Payload Rank": 1,
+              "Third Stage Rank": 0,
+              "Second Stage Rank": 0,
+              "First Stage Rank": 1,
+              "Boosters Rank": 0,
+            }  
+          if i == "Launch Vehicles":
+            i = []
+          if i == "Payloads":
+            i = []
+          if i == "Accolades":
+            i = {
+              "Low Earth Orbit": False,
+              "Med Earth Orbit": False,
+              "High Earth Orbit": False,
+              "Lunar Fly-by": False,
+              "High Lunar Orbit": False,
+              "Medium Lunar Orbit": False,
+              "Low Lunar Orbit": False,
+              "Moon Landing": False,
+              "Moon Landing/Return": False,
+              "Moon Habitat": False,
+              "Space Station": False,
+              "Deep Space": False,
+              "???": False
+            }
+        db[i] == localdb[i]
+  except ResetErr:
     if debug == True:
       for i in db:
         if i == None:
@@ -141,8 +228,10 @@ def reset():
 def load():
   localdb = {}
   _x = [i for i in db]
+  print(_x)
   for i in _x:
     localdb[i] = db[i]
+    print(i)
   return localdb
 
 def awardAccolade(award):
@@ -157,20 +246,23 @@ def awardAccolade(award):
     print(f"You have achieved {award}")
 
 
+
 localdb = load()
 check = ""
 try:
   b = localdb["Name"]
   if b == None:
-    raise KeyError
+    raise ResetErr
 except KeyError:  
-  check = input("Press Enter to Start")
+  check = input("Press Enter")
+except ResetErr:
+  check = input("Press Enter to Start Again")
 else:
-  save(localdb)
-if check == "uuddlrlr":
-  save(localdb, true)
-else:
-  save(localdb)
+  if check == "uuddlrlr":
+    save(localdb, true)
+  else:
+    save(localdb)
+
 
 
 #game defs
@@ -196,11 +288,15 @@ def welcomeback():
   save(localdb)
 def intro():
   try:
-    print(db)
-    x = localdb["Name"]
+    x = db["Name"]
+    if x == None:
+      raise ResetErr
+    del x
   except KeyError:
-    type("Databases are being reset")
+    type("Something went wrong [KEY ERROR]")
     quit()
+  except ResetErr:
+    pass
   if not localdb["Name"] == None:
     if localdb["Name"] != "":
       welcomeback()
