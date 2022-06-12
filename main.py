@@ -156,7 +156,7 @@ def awardAccolade(award):
     x[award] = True
     print(f"You have achieved {award}")
 
-resetdb()
+
 localdb = load()
 check = ""
 try:
