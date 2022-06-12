@@ -42,12 +42,12 @@ def save(localdb, debug=false):
     x = db["Failed Missions"]
     x = db["Research"]
     x = db["Accolades"]
-    if X == None:
+    if x == None:
       raise KeyError
     del x
   except KeyError:
     if debug == True:
-      db["Name"] = ""
+      """db["Name"] = ""
       db["Funding"] = 1500
       db["Missions"] = []
       db["Successful Missions"] = []
@@ -75,12 +75,12 @@ def save(localdb, debug=false):
         "Space Station": False,
         "Deep Space": False,
         "???": False
-      }
+      }"""
       _x = [i for i in localdb]
       for i in _x:
         db[i] = localdb[i]
     else:
-      db["Name"] = ""
+      """db["Name"] = ""
       db["Funding"] = 150
       db["Missions"] = []
       db["Successful Missions"] = []
@@ -108,7 +108,7 @@ def save(localdb, debug=false):
         "Space Station": False,
         "Deep Space": False,
         "???": False
-      }
+      }"""
       _x = [i for i in localdb]
       for i in _x:
         db[i] = localdb[i]
@@ -118,15 +118,8 @@ def save(localdb, debug=false):
       db[i] = localdb[i]
 
 def reset():
-  db["Name"] = None
-  db["Funding"] = None
-  db["Missions"] = None
-  db["Successful Missions"] = None
-  db["Failed Missions"] = None
-  db["Research"] = None
-  db["Launch Vehicles"] = None
-  db["Payloads"] = None
-  db["Accolades"] = None
+  for i in db:
+    db[i] = None
 def load():
   localdb = {}
   _x = [i for i in db]
@@ -138,6 +131,7 @@ def awardAccolade(award):
   x = localdb["Accolades"]
   try:
     y = x[award]
+    del y
   except KeyError:
     print(f"{award} is not a valid award")
   else:
@@ -146,7 +140,15 @@ def awardAccolade(award):
 
 
 localdb = load()
-check = input("Press Enter to Start")
+check = ""
+try:
+  b = localdb["Name"]
+  if b == None:
+    raise KeyError
+except KeyError:  
+  check = input("Press Enter to Start")
+else:
+  save(localdb)
 if check == "uuddlrlr":
   save(localdb, true)
 else:
@@ -154,35 +156,39 @@ else:
 
 
 #game defs
+def welcome():
+  type("Welcome to ",0.025, False, False)
+  rgbcolortype("Space Agency Simulator", 60, 230, 30, 0.025)
+  type("This game has an ", newline=false)
+  rgbcolortype("autosave",0,255,0, newline=false)
+  type(" feature")
+  sleep(1)
+  type("You may manually save by selecting the last option on the main menu.")
+  sleep(1)
+  type("Please enter your agency name", 0.025, newline=False)
+  localdb["Name"] = input(": ")
+  save(localdb)
+def welcomeback():
+  type(f"Welcome back \033[38;2;255;250;0m{localdb['Name']}\33[0m!", 0)
+  sleep(5)
+  type("Reloading ", newline=false)
+  rgbcolortype("Save",0,255,0, newline=false)
+  type("!")
+  sleep(3)
+  save(localdb)
 def intro():
   try:
     x = localdb["Name"]
   except KeyError:
     type("Databases are being reset")
     quit()
-  if localdb["Name"] != "":
-    type(f"Welcome back \033[38;2;255;250;0m{localdb['Name']}\33[0m!", 0)
-    sleep(5)
-    type("Reloading ", newline=false)
-    rgbcolortype("Save",0,255,0, newline=false)
-    type("!")
-    sleep(3)
-  else:
-    type("Welcome to ",0.025, False, False)
-    rgbcolortype("Space Agency Simulator", 60, 230, 30, 0.025)
-    type("This game has an ", newline=false)
-    rgbcolortype("autosave",0,255,0, newline=false)
-    type(" feature")
-    sleep(1)
-    type("You may manually save by selecting the last option on the main menu.")
-    sleep(1)
-    type("Please enter your agency name", 0.025, newline=False)
-    localdb["Name"] = input(": ")
-    if localdb["Name"] == "opdebug":
-      save(localdb,true)
+  if not localdb["Name"] == None:
+    if localdb["Name"] != "":
+      welcomeback()
     else:
-      resetdb()
-      save(localdb)
+      welcome()  
+  else:
+    welcome()
 
 def new_pl():
   clr()
@@ -676,14 +682,20 @@ Payload Experience: \033[38;2;0;255;0m Rank {localdb["Research"]["Payload Rank"]
     sleep(2)
     save(localdb)
     mainscreen()
-  if mainscreen_input > 9 < 666:
+  if mainscreen_input > 9 and mainscreen_input < 666 and mainscreen_input > 666:
     type("Not an accepted value", 0)
     save(localdb)
     sleep(3)
     mainscreen()
   if mainscreen_input == 666:
-    reset()
-    save(localdb)
+    type("Are you sure you wish to Reset your save? \n(Press Any Key Except Enter for Yes. Press Enter for no.)")
+    x = input(">:")
+    if x != "" or x != " ":
+      reset()
+      save(localdb)
+    else:
+      mainscreen()
+      save(localdb)
 
 
 
