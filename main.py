@@ -196,6 +196,7 @@ def welcomeback():
   save(localdb)
 def intro():
   try:
+    print(db)
     x = localdb["Name"]
   except KeyError:
     type("Databases are being reset")
