@@ -36,12 +36,22 @@ def rgbcolortype(w, r, g, b, delay=0.025, instant=False, newline=True):
 
 #classes
 
+class User():
+  def __init__(self, name, id):
+    self.name = name
+    self.id = id
+  def clear(self):
+    del self
+
 class Astronaut():
-  def __init__(self, name, missions, missionslist = [], status = "Alive"):
+  def __init__(self, name, missions = 0, missionslist = [], status = "Alive"):
     self.name = name
     self.missions = missions
     self.missionslist = missionslist
     self.status = status
+  def __repr__(self):
+    repre = f"Astronaut {self.name}"
+    return repre
   def update(self, mission: dict, status): 
     self.missions += 1
     self.missionslist.append(mission)
@@ -52,9 +62,4 @@ class Astronaut():
 
 # Game Func
 
-def load(user):
-  with open("db.json","r") as db:
-    db = json.load(db)
 
-print("Great Rework Underway")
-  
