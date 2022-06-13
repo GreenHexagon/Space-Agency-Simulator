@@ -50,4 +50,11 @@ class Astronaut():
     if status == "Failed":
       self.status == f"Deceased: killed on {mission['Name']}"
 
-class Mission()
+# Game Func
+
+def load(user):
+  with open("db.json","r") as db:
+    db = json.load(db)
+
+print("Great Rework Underway")
+  
